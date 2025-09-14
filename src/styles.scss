@@ -35,3 +35,10 @@ p {
     margin-bottom: 1rem;
     font-size: 2rem;
 }
+
+select.form-select option {
+    padding: 0px;
+    min-height: 28px !important;
+    font-size: 14px;
+    line-height: 1.2;
+  }

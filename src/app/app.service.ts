@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environments';
 
 const URL_CALENDARS = '/api/v1/calendar';
+const URL_CLIENTS = '/api/v1/client';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,13 @@ export class AppService {
 
   getCalendarView(startDate: string, endDate: string): Observable<any>{
     return this.http.get(`${environment.URL_API}${URL_CALENDARS}/view?startDate=${startDate}&endDate=${endDate}`)
+    .pipe(map((resp: any) => {
+      return resp;
+    }));
+  }
+
+  getClients(ativo: boolean, search: string): Observable<any[]> {
+    return this.http.get(`${environment.URL_API}${URL_CLIENTS}/?ativo=${ativo}&search=${search}`)
     .pipe(map((resp: any) => {
       return resp;
     }));

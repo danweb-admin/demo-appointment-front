@@ -44,6 +44,7 @@
   [refresh]="refresh"
   [locale]="'pt-BR'"
   [cellTemplate]="customCellTemplate"
+  (dayClicked)="onDayClicked($event)"
   (eventClicked)="handleEvent('cliquei',$event.event)"
   (eventTimesChanged)="eventTimesChanged($event)">
   </mwl-calendar-month-view>

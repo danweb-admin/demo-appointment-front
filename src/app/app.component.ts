@@ -6,6 +6,7 @@ import { endOfMonth, format, startOfMonth } from 'date-fns';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Locacao } from './model/locacao';
 import { AppModalComponent } from './pages/app-modal.component';
+import { da } from 'date-fns/locale';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +14,11 @@ import { AppModalComponent } from './pages/app-modal.component';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit{
-
+  
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any> | undefined;
   
   view: CalendarView = CalendarView.Month;
-
+  
   modalData: { event: CalendarEvent<any> } | null = null;
   
   CalendarView = CalendarView;
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit{
   viewDate: Date = new Date();
   refresh: Subject<void> = new Subject();
   events: CalendarEvent[] = [];
-
+  
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
@@ -45,11 +46,10 @@ export class AppComponent implements OnInit{
   ];
   
   constructor(private appService: AppService,
-              private modal: NgbModal
+    private modal: NgbModal
   ){
     
   }
-
 
   
   ngOnInit(): void {
@@ -61,6 +61,7 @@ export class AppComponent implements OnInit{
     const primeiroDia = startOfMonth(data);
     const primeiroFormatado = format(primeiroDia, 'yyyy-MM-dd');
     this.loadEvents(primeiroFormatado,ultimoDiaFormatado);
+    console.log(this.events);
   }
   
   handleEvent(action: string, event: CalendarEvent) {
@@ -70,8 +71,9 @@ export class AppComponent implements OnInit{
       centered: true
     });
     modalRef.componentInstance.event = event; // 👈 passa o evento como input
+    console.log(this.events);
   }
-
+  
   eventTimesChanged({
     event,
     newStart,
@@ -87,17 +89,24 @@ export class AppComponent implements OnInit{
       }
       return iEvent;
     });
+    console.log('osnosnosnsos');
+    
     // this.handleEvent('Dropped or resized', event);
   }
-
   
-
+  onDayClicked(event: any): void {
+    const day = event.day; // tipo “any” ou inferido
+    const date: Date = day.date;
+    const events = day.events as CalendarEvent<any>[];
+    console.log(date, events);
+  }
+  
+  
   loadEvents(dataInicial: string, dataFinal: string){
     this.appService.getCalendarView(dataInicial,dataFinal).subscribe(data => {
       this.events = [];
       
-      
-      this.events = data.map((evento: { start: string | number | Date; end: string | number | Date; title: string, status: string; clienteFull: string; equipamentoFull: string; motoristaRecolhe: string; motoristaEntrega: string; color: string; cellPhone: string; endereco: string }): CalendarEvent<Locacao> => {
+      this.events = data.map((evento: { start: string | number | Date; end: string | number | Date; title: string, status: string; clienteFull: string; equipamentoFull: string; motoristaRecolhe: string; motoristaEntrega: string; color: string; cellPhone: string; endereco: string, calendarId: string }): CalendarEvent<Locacao> => {
         let color_;
         
         color_ = { primary: evento.color, secondary: '#D2E3FC' }; // confirmada
@@ -108,6 +117,7 @@ export class AppComponent implements OnInit{
           end: new Date(evento.end),
           title: evento.title,
           color: color_,
+          id: evento.calendarId,
           meta: {
             status: evento.status == '1' ? 'Confirmada' : 'Pendente',
             clienteFull: evento.clienteFull,
@@ -120,6 +130,7 @@ export class AppComponent implements OnInit{
         };
       });
     });
+    
   }
   
   closeOpenMonthViewDay(event: any) {

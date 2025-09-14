@@ -1,6 +1,8 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppService } from '../app.service';
+import { da } from 'date-fns/locale';
 
 @Component({
     selector: 'app-modal',
@@ -8,22 +10,34 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     styleUrls: ['./app-modal.component.scss']
 })
 export class AppModalComponent implements OnInit {
-    form: FormGroup | undefined;
+    form!: FormGroup;
     @Input() event: any;
+    locatarios: any[] = [];
     
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal, 
+                private fb: FormBuilder,
+                private appService: AppService) {}
     
     ngOnInit(): void {
-        
+        this.loadClients();
+        this.createForm();
     }
     
     createForm(): void {
-        //   this.form = this.formBuilder.group({
-        //     calendarId: [this.data.element.id],
-        //     isDriver: [this.data.isDriver],
-        //     personId: [''],
-        //     isCollect: [this.data.isCollect || false]
-        //   });
+        this.form = this.fb.group({
+            locatario: ['', Validators.required],
+            semCadastro: [false],
+            equipamento: ['', Validators.required],
+            dataCriacao: [{ value: new Date(), disabled: true }],
+            ponteiras: [''],
+            status: ['Pendente'],
+            tecnica: [''],
+            motoristaEntrega: [''],
+            motoristaRecolhe: [''],
+            data: ['', Validators.required],
+            inicio: ['', Validators.required],
+            fim: ['', Validators.required],
+        });
     }
     
     onNoClick(): void {
@@ -35,7 +49,7 @@ export class AppModalComponent implements OnInit {
     }
     
     maskPhone(value: string): string {
-
+        
         if (value === undefined)
             return ''
         
@@ -43,5 +57,12 @@ export class AppModalComponent implements OnInit {
         .replace(/\D/g, '') // remove tudo que não é dígito
         .replace(/^(\d{2})(\d)/, '($1) $2') // coloca parênteses no DDD
         .replace(/(\d{5})(\d{4})$/, '$1-$2'); // coloca o traço
+    }
+
+    loadClients(){
+        this.appService.getClients(true,'').subscribe(data => {
+            this.locatarios = data;
+            console.log(this.locatarios);
+        });
     }
 }
