@@ -26,7 +26,7 @@ jobs:
       with:
         username: williambr2022
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: williambr2022/demo-view-agenda-front
+        repository: williambr2022/demo-appointment-agenda-front
         tags: ${{ github.sha }}, latest
 
   
