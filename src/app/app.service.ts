@@ -6,6 +6,10 @@ import { environment } from 'src/environments/environments';
 
 const URL_CALENDARS = '/api/v1/calendar';
 const URL_CLIENTS = '/api/v1/client';
+const URL_EQUIPMENT = '/api/v1/equipaments';
+const URL_SPECIFICATIONS = '/api/v1/specifications';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +20,29 @@ export class AppService {
 
   }
 
+  save(calendar: any): Observable<any>{
+    return this.http.post(`${environment.URL_API}${URL_CALENDARS}`,calendar)
+    .pipe(map((resp: any) => {
+      return resp;
+    }));
+  }
+
+  update(calendar: any): Observable<any>{
+    return this.http.put(`${environment.URL_API}${URL_CALENDARS}/agendamento/${calendar.id}`,calendar)
+    .pipe(map((resp: any) => {
+      return resp;
+    }));
+  }
+
   getCalendarView(startDate: string, endDate: string): Observable<any>{
-    return this.http.get(`${environment.URL_API}${URL_CALENDARS}/view?startDate=${startDate}&endDate=${endDate}`)
+    return this.http.get(`${environment.URL_API}${URL_CALENDARS}/view-agendamento?startDate=${startDate}&endDate=${endDate}`)
+    .pipe(map((resp: any) => {
+      return resp;
+    }));
+  }
+
+  loadCalendarById(id: string){
+    return this.http.get(`${environment.URL_API}${URL_CALENDARS}/by-id?id=${id}`)
     .pipe(map((resp: any) => {
       return resp;
     }));
@@ -25,6 +50,20 @@ export class AppService {
 
   getClients(ativo: boolean, search: string): Observable<any[]> {
     return this.http.get(`${environment.URL_API}${URL_CLIENTS}/?ativo=${ativo}&search=${search}`)
+    .pipe(map((resp: any) => {
+      return resp;
+    }));
+  }
+
+  loadEquipment(ativo: boolean): Observable<any[]> {
+    return this.http.get(`${environment.URL_API}${URL_EQUIPMENT}?ativo=${ativo}`)
+    .pipe(map((resp: any) => {
+      return resp;
+    }));
+  }
+
+  loadSpecifications(): Observable<any[]> {
+    return this.http.get(`${environment.URL_API}${URL_SPECIFICATIONS}`)
     .pipe(map((resp: any) => {
       return resp;
     }));

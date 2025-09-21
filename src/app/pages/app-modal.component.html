@@ -11,7 +11,7 @@
     <div class="mb-3 d-flex align-items-center">
       <div class="flex-grow-1">
         <label class="form-label">Locatário(a)</label>
-        <select id="status" class="form-select" formControlName="locatario">
+        <select id="status" class="form-select" formControlName="clientId">
           <option *ngFor="let item of locatarios" [value]="item.id">{{item.name}} - {{item.city.nome}} - {{item.state.sigla}}</option>
 
         </select>
@@ -21,7 +21,9 @@
     <div class="row mb-3">
       <div class="col">
         <label class="form-label">Equipamento</label>
-        <input type="text" class="form-control" formControlName="equipamento" />
+        <select  class="form-select" formControlName="equipamentId">
+          <option *ngFor="let item of equipamentos" [value]="item.id">{{item.name}}</option>
+        </select>
       </div>
       
     </div>
@@ -29,7 +31,9 @@
     <div class="row mb-3">
       <div class="col">
         <label class="form-label">Ponteiras</label>
-        <input type="text" class="form-control" formControlName="ponteiras" />
+        <select  class="form-select" formControlName="ponteiras" >
+          <option *ngFor="let item of ponteiras" [value]="item.id">{{item.name}}</option>
+        </select>
       </div>
       
       <div class="col">
@@ -46,21 +50,21 @@
     <div class="row mb-3">
       <div class="col">
         <label class="form-label">Data</label>
-        <input type="date" class="form-control" formControlName="data" />
+        <input type="date" class="form-control" formControlName="date" />
       </div>
       <div class="col">
         <label class="form-label">Início</label>
-        <input type="time" class="form-control" formControlName="inicio" />
+        <input type="time" class="form-control" formControlName="startTime1" />
       </div>
       <div class="col">
         <label class="form-label">Final</label>
-        <input type="time" class="form-control" formControlName="fim" />
+        <input type="time" class="form-control" formControlName="endTime1" />
       </div>
     </div>
     
     <div class="d-flex justify-content-end">
       <button type="button" class="btn btn-secondary me-2" (click)="activeModal.dismiss()">Cancelar</button>
-      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Salvar</button>
+      <button type="submit" class="btn btn-primary" [disabled]="bloquear" >Salvar</button>
     </div>
   </form>
 </div>

@@ -2,21 +2,21 @@
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 // @media (max-width: 768px) {
-    .cal-month-view .cal-cell-top {
-        min-height: 250px !important;
-        flex: 1 !important;
-    }
-    
+.cal-month-view .cal-cell-top {
+    min-height: 250px !important;
+    flex: 1 !important;
+}
+
 // }
 
 .modal-60 .modal-dialog {
-  max-width: 80vw !important;  // 60% da largura da tela
-  width: 80vw !important;
+    max-width: 80vw !important;  // 60% da largura da tela
+    width: 80vw !important;
 }
 
 .modal-60 .modal-content {
-  height: auto;                // ajusta altura automática
-  border-radius: 10px;
+    height: auto;                // ajusta altura automática
+    border-radius: 10px;
 }
 .h2, h2 {
     font-size: calc(3.325rem + .9vw) !important;
@@ -41,4 +41,8 @@ select.form-select option {
     min-height: 28px !important;
     font-size: 14px;
     line-height: 1.2;
-  }
+}
+
+.toast-container {
+    z-index: 999999 !important;
+}

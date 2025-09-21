@@ -10,15 +10,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import localePt from '@angular/common/locales/pt';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppModalComponent } from './pages/app-modal.component';
+import { ToastrModule } from 'ngx-toastr';
+import { TokenInterceptor } from './token.interceptor';
+import { TokenModalComponent } from './pages/token-modal.component';
+import { SpinnerComponent } from './pages/spinner.component';
 
 registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppModalComponent
+    AppModalComponent,
+    TokenModalComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
@@ -32,9 +38,16 @@ registerLocaleData(localePt);
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: () => adapterFactory() // <- aqui aceita
-    })
+    }),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
