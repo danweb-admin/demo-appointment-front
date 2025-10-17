@@ -41,7 +41,7 @@ export class AppModalComponent implements OnInit {
                 active: [true],
                 equipamentId: ['', Validators.required],
                 ponteiras: [''],
-                status: [''],
+                status: ['2'],
                 date: ['', Validators.required],
                 startTime1: ['', Validators.required],
                 endTime1: ['', Validators.required],
