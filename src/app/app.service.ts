@@ -20,6 +20,7 @@ export class AppService {
 
   constructor(private http: HttpClient, private appConfig: AppConfigService) {
     this.apiUrl = appConfig.apiUrl;
+    // this.apiUrl = 'http://localhost:8080';
   }
 
   save(calendar: any): Observable<any>{

@@ -45,6 +45,7 @@ export class AppModalComponent implements OnInit {
                 date: ['', Validators.required],
                 startTime1: ['', Validators.required],
                 endTime1: ['', Validators.required],
+                note: [''],
                 calendarSpecifications:  this.formBuilder.array([]),
 
             });
@@ -93,7 +94,8 @@ export class AppModalComponent implements OnInit {
                         status: dados.status,
                         date: data.toISOString().split('T')[0],
                         startTime1: inicio,
-                        endTime1: fim
+                        endTime1: fim,
+                        note: dados.note
                     });
                     
                     // Comparar com a data atual
