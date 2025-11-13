@@ -14,7 +14,7 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(private loadingService: LoadingService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // this.loadingService.show();
+    this.loadingService.show();
 
     const token = localStorage.getItem('token');
 
