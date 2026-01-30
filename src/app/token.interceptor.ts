@@ -14,7 +14,7 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(private loadingService: LoadingService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // this.loadingService.show();
+    this.loadingService.show();
 
     const token = localStorage.getItem('token');
 
@@ -26,14 +26,14 @@ export class TokenInterceptor implements HttpInterceptor {
       });
       return next.handle(cloned).pipe(
       finalize(() => {
-        // this.loadingService.hide()
+        this.loadingService.hide()
       })
     );
     }
 
     return next.handle(req).pipe(
       finalize(() => {
-        // this.loadingService.hide()
+        this.loadingService.hide()
       })
     );
   }

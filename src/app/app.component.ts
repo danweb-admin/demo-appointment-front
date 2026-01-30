@@ -151,9 +151,9 @@ export class AppComponent implements OnInit{
     (error: any) =>{
       this.toastr.error(error.error)
       
-      // if (error.error.includes('expirado') || error.error.includes('permissão')){
-      //   localStorage.removeItem('token');
-      // }
+      if (error.error.includes('expirado') || error.error.includes('permissão')){
+        localStorage.removeItem('token');
+      }
 
       console.log(error.error)
     }

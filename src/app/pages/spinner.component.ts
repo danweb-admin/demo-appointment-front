@@ -30,8 +30,8 @@ export class SpinnerComponent {
     public loadingService: LoadingService,
     private cdr: ChangeDetectorRef
   ) {
-    // this.loadingService.loading$.subscribe(() => {
-    //   this.cdr.detectChanges();
-    // });
+    this.loadingService.loading$.subscribe(() => {
+      this.cdr.detectChanges();
+    });
   }
 }
